@@ -624,7 +624,7 @@ Operating system commands:
 │ 1 │   1 │ Set icon name                         │
 │ 2 │   2 │ Set window title                      │
 │ 3 │   4 │ Set/read color palette                │
-│ 4 │   9 │ iTerm2 Grown notifications            │
+│ 4 │   9 │ iTerm2 Growl notifications            │
 │ 5 │  10 │ Set foreground color (x11 color spec) │
 │ 6 │  11 │ Set background color (x11 color spec) │
 │ 7 │ ... │ others                                │
