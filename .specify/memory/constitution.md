@@ -1,50 +1,109 @@
-# [PROJECT_NAME] Constitution
-<!-- Example: Spec Constitution, TaskFlow Constitution, etc. -->
+<!--
+SYNC IMPACT REPORT
+==================
+Version change: 0.0.0 → 1.0.0 (Initial constitution)
+Modified principles: N/A (first version)
+Added sections:
+  - Core Principles (3 principles)
+  - Fork Goals
+  - Development Workflow
+  - Governance
+Removed sections: N/A
+Templates requiring updates:
+  - .specify/templates/plan-template.md ✅ (no changes needed - Constitution Check section is generic)
+  - .specify/templates/spec-template.md ✅ (no changes needed - requirements format compatible)
+  - .specify/templates/tasks-template.md ✅ (no changes needed - task structure compatible)
+  - .specify/templates/agent-file-template.md ✅ (no changes needed - generic structure)
+  - .specify/templates/checklist-template.md ✅ (no changes needed - generic structure)
+Follow-up TODOs: None
+-->
+
+# Nushell Fork Constitution
 
 ## Core Principles
 
-### [PRINCIPLE_1_NAME]
-<!-- Example: I. Library-First -->
-[PRINCIPLE_1_DESCRIPTION]
-<!-- Example: Every feature starts as a standalone library; Libraries must be self-contained, independently testable, documented; Clear purpose required - no organizational-only libraries -->
+### I. Upstream Compatibility
 
-### [PRINCIPLE_2_NAME]
-<!-- Example: II. CLI Interface -->
-[PRINCIPLE_2_DESCRIPTION]
-<!-- Example: Every library exposes functionality via CLI; Text in/out protocol: stdin/args → stdout, errors → stderr; Support JSON + human-readable formats -->
+All changes MUST minimize merge conflicts in both directions:
 
-### [PRINCIPLE_3_NAME]
-<!-- Example: III. Test-First (NON-NEGOTIABLE) -->
-[PRINCIPLE_3_DESCRIPTION]
-<!-- Example: TDD mandatory: Tests written → User approved → Tests fail → Then implement; Red-Green-Refactor cycle strictly enforced -->
+- **Merging FROM upstream**: Changes MUST NOT restructure, rename, or relocate
+  files/modules unless absolutely necessary for the feature
+- **PRs TO upstream**: Bug fixes and minor enhancements MUST be structured as
+  clean, isolated commits suitable for upstream contribution
+- **Conflict avoidance**: Prefer additive changes over modifications to existing
+  code paths; when modifications are required, keep them minimal and well-documented
 
-### [PRINCIPLE_4_NAME]
-<!-- Example: IV. Integration Testing -->
-[PRINCIPLE_4_DESCRIPTION]
-<!-- Example: Focus areas requiring integration tests: New library contract tests, Contract changes, Inter-service communication, Shared schemas -->
+**Rationale**: This fork exists to build upon upstream work while contributing
+back. Unnecessary conflicts waste effort and reduce the value of both activities.
 
-### [PRINCIPLE_5_NAME]
-<!-- Example: V. Observability, VI. Versioning & Breaking Changes, VII. Simplicity -->
-[PRINCIPLE_5_DESCRIPTION]
-<!-- Example: Text I/O ensures debuggability; Structured logging required; Or: MAJOR.MINOR.BUILD format; Or: Start simple, YAGNI principles -->
+### II. Non-Breaking Defaults
 
-## [SECTION_2_NAME]
-<!-- Example: Additional Constraints, Security Requirements, Performance Standards, etc. -->
+Changes MUST NOT break other Nushell users' workflows when enabled by default:
 
-[SECTION_2_CONTENT]
-<!-- Example: Technology stack requirements, compliance standards, deployment policies, etc. -->
+- **Key bindings**: MUST NOT remap default key bindings without config opt-in
+- **Command behavior**: MUST NOT change existing command semantics unless fixing
+  a clear bug
+- **Output formats**: MUST NOT alter default output formats that scripts may depend on
+- **Configuration**: New features MUST work with default configuration or fail
+  gracefully with clear guidance
 
-## [SECTION_3_NAME]
-<!-- Example: Development Workflow, Review Process, Quality Gates, etc. -->
+**Rationale**: Other Nushell users rely on consistent, predictable behavior. Breaking
+their workflows would harm the broader community and reduce upstream acceptance.
 
-[SECTION_3_CONTENT]
-<!-- Example: Code review requirements, testing gates, deployment approval process, etc. -->
+### III. Config-Gated Changes
+
+Whenever feasible, changes MUST be gated behind build-time or runtime configuration:
+
+- **Runtime config**: Prefer runtime configuration in `config.nu` for behavioral
+  changes that users may want to toggle
+- **Build-time features**: Use Cargo feature flags for larger optional components
+  that add compile time or binary size
+- **Environment variables**: Acceptable for development/debugging features but
+  SHOULD NOT be the primary configuration mechanism for user-facing features
+- **Documentation**: All configuration options MUST be documented with their
+  default values and effects
+
+**Rationale**: Config-gating allows this fork to diverge for personal use while
+maintaining a clean path for upstream contributions and avoiding breaks for others.
+
+## Fork Goals
+
+This fork serves three specific purposes that guide all development decisions:
+
+1. **Personal Customization**: Customize the shell to the maintainer's preferences
+   while keeping changes isolated and reversible
+2. **Component Reuse**: Leverage Nushell building blocks for constructing REPLs
+   in larger applications, especially non-terminal-based system management tools
+3. **Upstream Contribution**: Contribute meaningful changes upstream, prioritizing
+   bug fixes and well-isolated enhancements
+
+## Development Workflow
+
+### Before Making Changes
+
+1. **Upstream check**: Verify the change doesn't already exist in upstream or an
+   open PR
+2. **Conflict assessment**: Evaluate whether the change will cause merge conflicts
+3. **Config evaluation**: Determine if the change can be config-gated
+
+### During Implementation
+
+1. **Minimal footprint**: Make the smallest change that achieves the goal
+2. **Clear boundaries**: Keep fork-specific code in identifiable locations when possible
+3. **Test coverage**: Maintain or improve test coverage for modified code
+
+### Before Committing
+
+1. **Upstream suitability**: If the change is suitable for upstream, structure it
+   as a clean PR candidate
+2. **Breaking check**: Verify no default behaviors are broken
+3. **Config documentation**: Document any new configuration options
 
 ## Governance
-<!-- Example: Constitution supersedes all other practices; Amendments require documentation, approval, migration plan -->
 
-[GOVERNANCE_RULES]
-<!-- Example: All PRs/reviews must verify compliance; Complexity must be justified; Use [GUIDANCE_FILE] for runtime development guidance -->
+- This constitution supersedes conflicting guidance in other project documents
+- Amendments require updating this document with version increment and rationale
+- All PRs and code reviews SHOULD verify compliance with these principles
+- Exceptions MUST be documented with clear justification in the relevant PR or commit
 
-**Version**: [CONSTITUTION_VERSION] | **Ratified**: [RATIFICATION_DATE] | **Last Amended**: [LAST_AMENDED_DATE]
-<!-- Example: Version: 2.1.1 | Ratified: 2025-06-13 | Last Amended: 2025-07-16 -->
+**Version**: 1.0.0 | **Ratified**: 2025-12-28 | **Last Amended**: 2025-12-28
