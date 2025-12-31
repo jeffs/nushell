@@ -1,6 +1,7 @@
 use nu_cmd_base::util::get_editor;
 use nu_engine::{command_prelude::*, env_to_strings, get_full_help};
 use nu_protocol::{PipelineMetadata, shell_error::io::IoError};
+#[cfg(feature = "os")]
 use nu_system::ForegroundChild;
 use nu_utils::ConfigFileKind;
 
