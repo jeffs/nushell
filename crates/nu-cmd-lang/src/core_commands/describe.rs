@@ -245,11 +245,14 @@ fn run(
             let type_ = stream.type_().describe();
 
             let description = if options.detailed {
+                #[allow(unreachable_patterns)]
                 let origin = match stream.source() {
                     ByteStreamSource::Read(_) => "unknown",
                     ByteStreamSource::File(_) => "file",
                     #[cfg(feature = "os")]
                     ByteStreamSource::Child(_) => "external",
+                    #[cfg(not(feature = "os"))]
+                    _ => "unknown",
                 };
 
                 Value::record(
