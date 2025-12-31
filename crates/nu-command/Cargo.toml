@@ -40,7 +40,7 @@ typetag = "0.2"
 nu-path.workspace = true
 nu-pretty-hex.workspace = true
 nu-protocol.workspace = true
-nu-system.workspace = true
+nu-system = { workspace = true, optional = true }
 nu-table.workspace = true
 nu-term-grid.workspace = true
 nu-utils.workspace = true
@@ -206,6 +206,7 @@ os = [
 	"nu-protocol/os",
 	"nu-utils/os",
 	"dep:fff-search",
+	"nu-system",
 
 	# os-dependant dependencies
 	"crossterm",
