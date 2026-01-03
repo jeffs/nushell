@@ -1,4 +1,6 @@
 #![cfg_attr(not(feature = "os"), allow(unused))]
+// False positives from struct fields in error enum variants (Rust 2024 edition + thiserror)
+#![allow(unused_assignments)]
 #![doc = include_str!("../README.md")]
 mod alias;
 pub mod ast;
