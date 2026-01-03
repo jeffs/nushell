@@ -7,6 +7,8 @@
         reason = "This file may be compiled as host build-script code while building the wasm target"
     )
 )]
+// False positives from struct fields in error enum variants (Rust 2024 edition + thiserror)
+#![allow(unused_assignments)]
 
 mod alias;
 pub mod ast;
